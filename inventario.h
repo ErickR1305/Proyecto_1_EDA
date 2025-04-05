@@ -4,18 +4,25 @@
 typedef struct{
     int codigo;
     float precio;
-    int inventario;
+    int *inventario;
     char *nombre;
 }Articulo;
 
-typedef struct{
-    char departamento[30];
-    Articulo *articulos;
-}Arreglo_articulos;
+typedef struct {
+    char *nombre_departamento;
+    Articulo* articulos;
+    int num_articulos;
+    int max_articulos;
+} Departamento;
 
-Arreglo_articulos *crearArreglo(int max);
-void insertarArticulo(int indice,int max,Arreglo_articulos*unArreglo);
-void listarArticulos(int indice,Arreglo_articulos unArreglo);
+typedef struct {
+    Departamento* departamentos;
+    int num_departamentos;
+} Inventario;
 
-void LeerArticulos(Arreglo_articulos *arreglo,int *indice);//Lee productos iniciasles con archivos
+
+Inventario *crearArreglo();
+void crearDepartamento(Inventario*unInventario);
+void insertarArticulo(int indice,int indice_dep,Inventario*unInventario);
+void listarArticulos(int indice,int indice_dep,Inventario*unInventario);
 #endif // INVENTARIO_H_INCLUDED
