@@ -57,7 +57,7 @@ void insertarArticulo(int *indice,int max,Articulo *unArreglo){
         printf("\n Ingrese el proveedor:\n Nombre[%d]:",i+1);
         scanf("%s",unArreglo[*indice].proveedor[i].Nombre);
         getchar();
-        printf("Apellido:");
+        printf("Apellido[%d]:",i+1);
         scanf("%s",unArreglo[*indice].proveedor[i].Apellido);
         getchar();
         }
@@ -66,32 +66,31 @@ void insertarArticulo(int *indice,int max,Articulo *unArreglo){
     }
 }
 
-void listarArticulos(int indice,Articulo *unArreglo){
-    printf("\n ====ARTICULOS REGISTRADOS====");
-    for(int i=0;i<indice;i++){
-        printf("\n Nombre del articulo: %s",unArreglo[i].info.nombre);
-        printf("\n Codigo del articulo: %d",unArreglo[i].info.codigo);
-        printf("\n Precio del articulo: %.2f",unArreglo[i].info.precio);
-        printf("\n Inventario del articulo: %d",unArreglo[i].info.inventario);
-        printf("\n Departamento del articulo: %s",unArreglo[i].info.Nom_departamento);
+void listarArticulos(int *i,Articulo *unArreglo){
+        printf("\n Nombre del articulo: %s",unArreglo[*i].info.nombre);
+        printf("\n Codigo del articulo: %d",unArreglo[*i].info.codigo);
+        printf("\n Precio del articulo: %.2f",unArreglo[*i].info.precio);
+        printf("\n Inventario del articulo: %d",unArreglo[*i].info.inventario);
+        printf("\n Departamento del articulo: %s",unArreglo[*i].info.Nom_departamento);
         for (int p=0;p<2;p++){
-            printf("\n Nombre del proveedor [%d]:%s",p+1,unArreglo[i].proveedor[p].Nombre);
-            printf("\n Apellido del proveedor [%d]:%s",p+1,unArreglo[i].proveedor[p].Apellido);
+            printf("\n Proveedor [%d]:%s %s",p+1,unArreglo[*i].proveedor[p].Nombre,
+                                            unArreglo[*i].proveedor[p].Apellido);
         }
+        (*i)++;
         printf("\n\n");
     }
-}
 
-void listarUnArticulo(int indice,Articulo*unArreglo){
+
+void listarUnArticulo(int indice,Articulo *unArreglo){
     printf("\n ====ARTICULO REGISTRADO====");
     printf("\n Nombre del articulo: %s",unArreglo[indice].info.nombre);
     printf("\n Codigo del articulo: %d",unArreglo[indice].info.codigo);
     printf("\n Precio del articulo: %.2f",unArreglo[indice].info.precio);
     printf("\n Inventario del articulo: %d",unArreglo[indice].info.inventario);
     printf("\n Departamento del articulo: %s",unArreglo[indice].info.Nom_departamento);
-    for (int i=0;i<2;i++){
-        printf("\n Nombre del proveedor [%d]:%s",i+1,unArreglo[indice].proveedor[i].Nombre);
-        printf("\n Apellido del proveedor [%d]:%s",i+1,unArreglo[indice].proveedor[i].Apellido);
+    for (int p=0;p<2;p++){
+        printf("\n Proveedor [%d]:%s %s",p+1,unArreglo[indice].proveedor[p].Nombre,
+                                         unArreglo[indice].proveedor[p].Apellido);
         }
         printf("\n\n");
     }
@@ -113,7 +112,7 @@ void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
         if(unArreglo[i].info.codigo == codigo) {
             printf("\n Se eliminara el siguiente articulo con la siguiente info.");
             listarUnArticulo(i, unArreglo);
-            
+
             // Liberar memoria del artículo a eliminar
             free(unArreglo[i].info.nombre);
             free(unArreglo[i].info.Nom_departamento);
@@ -121,27 +120,36 @@ void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
                 free(unArreglo[i].proveedor[p].Nombre);
                 free(unArreglo[i].proveedor[p].Apellido);
             }
-            
+
             // Si no es el último elemento, copiar el último elemento a esta posición
             if(i != *indice - 1) {
                 // Copiar la estructura info
                 unArreglo[i].info = unArreglo[*indice-1].info;
-                
+
                 // Asignar nuevos punteros para los strings
                 unArreglo[i].info.nombre = strdup(unArreglo[*indice-1].info.nombre);
                 unArreglo[i].info.Nom_departamento = strdup(unArreglo[*indice-1].info.Nom_departamento);
-                
+
                 // Copiar proveedores
                 for(int p = 0; p < 2; p++) {
                     unArreglo[i].proveedor[p].Nombre = strdup(unArreglo[*indice-1].proveedor[p].Nombre);
                     unArreglo[i].proveedor[p].Apellido = strdup(unArreglo[*indice-1].proveedor[p].Apellido);
                 }
             }
-            
+
             (*indice)--;
             printf("\n Articulo eliminado exitosamente:");
-            listarArticulos(*indice, unArreglo);
-            return;
+
+            if(*indice==0){
+                printf("\n ERROR: no hay articulos registrados...");
+            }else{
+                i=0;//se reinicia para que liste todos
+                printf("\n ====ARTICULOS REGISTRADOS====");
+                while(i<*indice)
+                listarArticulos(&i,unArreglo);
+                return;
+
+            }
         }
     }
     printf("\n El articulo con el codigo %d NO existe", codigo);
@@ -176,4 +184,29 @@ void actualizarArticulo(int codigo,Articulo*unArreglo,int indice){
     }
 }
 printf("\n El articulo con el codigo %d NO existe",codigo);
+}
+
+//función para leer archivos
+void LeerArticulos(Articulo *arreglo, int *num_articulos) {
+    FILE *dulce = fopen("Dulces.txt", "r");
+    if (dulce == NULL) {
+        printf("No se pudo acceder al archivo\n");
+        return;
+    }
+
+    while (*num_articulos < 30 &&
+           fscanf(dulce, "%29s %d %f %d %29s %29s %29s %29s %29s",
+                  arreglo[*num_articulos].info.nombre,
+                  &arreglo[*num_articulos].info.codigo,
+                  &arreglo[*num_articulos].info.precio,
+                  &arreglo[*num_articulos].info.inventario,
+                  arreglo[*num_articulos].info.Nom_departamento,
+                  arreglo[*num_articulos].proveedor[0].Nombre,
+                  arreglo[*num_articulos].proveedor[0].Apellido,
+                  arreglo[*num_articulos].proveedor[1].Nombre,
+                  arreglo[*num_articulos].proveedor[1].Apellido)== 9) {
+        (*num_articulos)++;
+    }
+
+    fclose(dulce);
 }
