@@ -5,11 +5,16 @@
 
 int main(){
 int opcion,opc2,opc3,opc4;
-int num_articulos=0;
+int num_articulos; //indice
+int max_articulos; //max-1, para que no se pase de lo asignado por malloc
+int codigo;
 
-Inventario *arreglo;
+Articulo *arreglo;
+printf("\n Ingrese la cantidad maxima de articulos a manejar:");
+scanf("%d",&max_articulos);
 
-arreglo=crearArreglo();
+arreglo=crearArreglo(max_articulos);
+num_articulos=0;
 
     do {
         printf("\n");
@@ -18,38 +23,55 @@ arreglo=crearArreglo();
             case 1:
             do{
                 
-            opc2=desplegarMenu("\n1)Insertar art. \n2)Listar articulos. \n3)Borrar art. \n4)Actualizar info. \n5)Buscar por codigo. \n6)Gestionar inventario \n7)Salir  ",7);
+            opc2=desplegarMenu("\n1)Insertar art. \n2)Listar articulos \n3)Buscar articulos \n4)Borrar art. \n5)Actualizar info. \n6)Salir ",6);
             switch (opc2){
                 case 1:
-                if(arreglo->num_departamentos==0){
-                    crearDepartamento(arreglo);
-                    insertarArticulo(0,arreglo->departamentos[0].num_articulos,arreglo);
-                }else{
-                    printf("\n Seleccione el departamento en el cual se agregara el articulo");
-                    for(int i=0;i<arreglo->num_departamentos;i++){
-                        printf("Dep.[%d]:%s\n",i,arreglo->departamentos[i].nombre_departamento);
-                    }
-                    scanf("%d",&opc3);
-                    insertarArticulo(opc3,arreglo->departamentos[opc3].num_articulos,arreglo);
-                    
-                }
+                insertarArticulo(&num_articulos,max_articulos,arreglo);
                 break;
             
             case 2:
-            if(arreglo->num_departamentos==0){
-                printf("\n ERROR: no hay departamentos registrados...");
+            if(num_articulos==0){
+                printf("\n ERROR: no hay articulos registrados...");
             }else{
-                printf("\n Seleccione el departamento del cual se listaran los articulos");
-                for(int i=0;i<arreglo->num_departamentos;i++){
-                        printf("Dep.[%d]:%s\n",i,arreglo->departamentos[i].nombre_departamento);
-                    }
-                scanf("%d",&opc4);
-                listarArticulos(opc4,arreglo->departamentos[opc4].num_articulos,arreglo);
+                listarArticulos(num_articulos,arreglo);
             }
             break;
             
+            case 3:
+            if(num_articulos==0){
+                printf("\n ERROR: no hay articulos registrados...");
+            }else{
+                printf("Introduzca el codigo del producto a buscar");
+                scanf("%d",&codigo);
+                buscarArticulos(codigo,arreglo,num_articulos);
             }
-            }while(opc2 !=7);
+            break;
+            
+            case 4:
+            if(num_articulos==0){
+                printf("\n ERROR: no hay articulos registrados...");
+            }else{
+                printf("Introduzca el codigo del producto a eliminar");
+                scanf("%d",&codigo);
+            borrarArticulo(codigo,arreglo,&num_articulos);
+            }
+            break;
+            
+            case 5:
+            if(num_articulos==0){
+                printf("\n ERROR: no hay articulos registrados...");
+            }else{
+                printf("Introduzca el codigo del producto a actualizar");
+                scanf("%d",&codigo);
+                actualizarArticulo(codigo,arreglo,num_articulos);
+            }
+            break;
+            
+            case 6:
+            printf("Saliendo del menu:Organizar inventario... Volviendo al menu principal");
+            
+            }
+            }while(opc2 !=6);
                 break;
 
                     break;
@@ -59,14 +81,3 @@ arreglo=crearArreglo();
         }
     } while (opcion !=4);
 } 
-/*Insertar un artículo nuevo
-
-Eliminar un artículo
-
-Buscar un artículo por su código
-
-Actualizar información de un artículo
-
-Listar todos los artículos
-
-Gestionar inventarios (aumentar o disminuir inventario)*/
