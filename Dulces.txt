@@ -1,3 +1,4 @@
-Emperador 30 1111 27.00
-Coca 20 2222 21.00
-Pelon 31 3333 8.00
+Coca 3030 19.00 30 Bebidas Angel Gutierrez Ricardo Mendez
+Pelon 1212 8.00 21 Duces_picantes Gerardo Gonzalez Carlos Medina
+Pepsi 3032 16.00 23 Bebidas Erick Munoz Ricardo Varela
+CarlosV 2425 10.00 18 Chocolates Carlos Campos Enrique Contreras
