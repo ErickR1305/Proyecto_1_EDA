@@ -18,15 +18,13 @@ typedef struct{
     Proveedor *proveedor;
 }Articulo;
 
-
+//PROTOTIPOS ARREGLOS
 Articulo *crearArreglo(int max);
 void insertarArticulo(int *indice,int max,Articulo *unArreglo);
-void listarArticulos(int indice,Articulo *unArreglo);
-void buscarArticulos(int codigo,Articulo*unArreglo,int indice);
-void listarUnArticulo(int indice,Articulo*unArreglo);
-void borrarArticulo(int codigo,Articulo*unArreglo,int*indice);
-void actualizarArticulo(int codigo,Articulo*unArreglo,int indice);
-
-
-//void LeerArticulos(Arreglo_articulos *arreglo,int *indice);//Lee productos iniciasles con archivos
+void listarArticulos(int *i,Articulo *unArreglo);
+void buscarArticulos(int codigo,Articulo *unArreglo,int indice);
+void listarUnArticulo(int indice,Articulo *unArreglo);
+void borrarArticulo(int codigo,Articulo *unArreglo,int *indice);
+void actualizarArticulo(int codigo,Articulo *unArreglo,int indice);
+void LeerArticulos(Articulo *arreglo,int *indice);//Lee productos iniciasles con archivos
 #endif// INVENTARIO_H_INCLUDED
