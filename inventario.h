@@ -1,28 +1,28 @@
 #ifndef INVENTARIO_H_INCLUDED
 #define INVENTARIO_H_INCLUDED
-
 typedef struct{
     int codigo;
     float precio;
-    int *inventario;
+    int inventario;
     char *nombre;
+    char *Nom_departamento;
+}Info;
+
+typedef struct{
+    char *Nombre;
+    char *Apellido;
+}Proveedor;
+
+typedef struct{
+    Info info;
+    Proveedor *proveedor;
 }Articulo;
 
-typedef struct {
-    char *nombre_departamento;
-    Articulo* articulos;
-    int num_articulos;
-    int max_articulos;
-} Departamento;
 
-typedef struct {
-    Departamento* departamentos;
-    int num_departamentos;
-} Inventario;
+Articulo *crearArreglo(int max);
+void insertarArticulo(int indice,int max,Articulo *unArreglo);
+//void listarArticulos(int indice,Arreglo_articulos unArreglo);
 
-
-Inventario *crearArreglo();
-void crearDepartamento(Inventario*unInventario);
-void insertarArticulo(int indice,int indice_dep,Inventario*unInventario);
-void listarArticulos(int indice,int indice_dep,Inventario*unInventario);
+//void LeerArticulos(Arreglo_articulos *arreglo,int *indice);//Lee productos iniciasles con archivos
 #endif // INVENTARIO_H_INCLUDED
+
