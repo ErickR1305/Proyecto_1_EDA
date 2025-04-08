@@ -57,7 +57,7 @@ void insertarArticulo(int *indice,int max,Articulo *unArreglo){
         printf("\n Ingrese el proveedor:\n Nombre[%d]:",i+1);
         scanf("%s",unArreglo[*indice].proveedor[i].Nombre);
         getchar();
-        printf("Apellido[%d]:",i+1);
+        printf("Apellido:");
         scanf("%s",unArreglo[*indice].proveedor[i].Apellido);
         getchar();
         }
@@ -107,52 +107,28 @@ void buscarArticulos(int codigo,Articulo*unArreglo,int indice){
         printf("\n El articulo con el codigo %d NO existe",codigo);
 }
 
-void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
-    for(int i = 0; i < *indice; i++) {
-        if(unArreglo[i].info.codigo == codigo) {
+void borrarArticulo(int codigo,Articulo*unArreglo,int*indice){
+    for(int i=0;i<*indice;i++){
+        if(unArreglo[i].info.codigo==codigo){
             printf("\n Se eliminara el siguiente articulo con la siguiente info.");
-            listarUnArticulo(i, unArreglo);
-
-            // Liberar memoria del artículo a eliminar
-            free(unArreglo[i].info.nombre);
-            free(unArreglo[i].info.Nom_departamento);
+            listarUnArticulo(i,unArreglo);
+            unArreglo[i].info.codigo=unArreglo[*indice-1].info.codigo;
+            unArreglo[i].info.precio=unArreglo[*indice-1].info.precio;
+            unArreglo[i].info.inventario=unArreglo[*indice-1].info.inventario;
+            strcpy(unArreglo[i].info.nombre,unArreglo[*indice-1].info.nombre);
+            strcpy(unArreglo[i].info.Nom_departamento,unArreglo[*indice-1].info.Nom_departamento);
+            
             for(int p = 0; p < 2; p++) {
-                free(unArreglo[i].proveedor[p].Nombre);
-                free(unArreglo[i].proveedor[p].Apellido);
+                strcpy(unArreglo[i].proveedor[p].Nombre, unArreglo[*indice-1].proveedor[p].Nombre);
+                strcpy(unArreglo[i].proveedor[p].Apellido, unArreglo[*indice-1].proveedor[p].Apellido);
             }
-
-            // Si no es el último elemento, copiar el último elemento a esta posición
-            if(i != *indice - 1) {
-                // Copiar la estructura info
-                unArreglo[i].info = unArreglo[*indice-1].info;
-
-                // Asignar nuevos punteros para los strings
-                unArreglo[i].info.nombre = strdup(unArreglo[*indice-1].info.nombre);
-                unArreglo[i].info.Nom_departamento = strdup(unArreglo[*indice-1].info.Nom_departamento);
-
-                // Copiar proveedores
-                for(int p = 0; p < 2; p++) {
-                    unArreglo[i].proveedor[p].Nombre = strdup(unArreglo[*indice-1].proveedor[p].Nombre);
-                    unArreglo[i].proveedor[p].Apellido = strdup(unArreglo[*indice-1].proveedor[p].Apellido);
-                }
-            }
-
             (*indice)--;
             printf("\n Articulo eliminado exitosamente:");
-
-            if(*indice==0){
-                printf("\n ERROR: no hay articulos registrados...");
-            }else{
-                i=0;//se reinicia para que liste todos
-                printf("\n ====ARTICULOS REGISTRADOS====");
-                while(i<*indice)
-                listarArticulos(&i,unArreglo);
-                return;
-
-            }
+            listarArticulos(*indice,unArreglo);
+            return;
         }
-    }
-    printf("\n El articulo con el codigo %d NO existe", codigo);
+        }
+        printf("\n El articulo con el codigo %d NO existe",codigo);
 }
 
 void actualizarArticulo(int codigo,Articulo*unArreglo,int indice){
