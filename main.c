@@ -2,12 +2,25 @@
 #include <stdlib.h>
 #include "inventario.h"
 #include "menu.h"
+#include "colaCircular.h"
+#include <time.h>
+#include "pila.h"
 
 int main(){
 int opcion,opc2,opc3,opc4;
 int num_articulos; //indice
 int max_articulos; //max-1, para que no se pase de lo asignado por malloc
 int codigo,i;
+srand(time(NULL));
+//prueba cola
+
+    ColaCircular *colaCircular;
+    int max;
+    Cliente *unCliente;
+    printf("Tamanio del arreglo cola:");
+    scanf("%i",&max);
+    colaCircular = crearColaCircular(max);
+
 
 Articulo *arreglo;
 printf("\n Ingrese la cantidad maxima de articulos a manejar:");
@@ -78,10 +91,53 @@ LeerArticulos(arreglo,&num_articulos);
             }
             }while(opc2 !=6);
                 break;
+        case 2://Simulación de atención a clientes
+            printf("\nBienvenido a nuestra tienda...\n");
+            for(i=0;i<3;i++){
+                if (validarEspacio(*colaCircular)){
+                    unCliente=CrearCliente();
+                    CapturarCliente(unCliente,num_articulos,arreglo);
+                    insertar(colaCircular,*unCliente);
+                }
+            }
+                for(int i=0;i<=colaCircular->t;i++)
+                AtendiendoCliente(&colaCircular->arrCola[i]);
 
-                    break;
+
+                listar(*colaCircular);
+            break;
+
 
             case 3:
+                do {
+            printf("\n\nEstructura Cola circular\n====================");
+            opc3= desplegarMenu ("\n1)Insertar\n2)Borrar\n3)Listar\n4)Salir\nOpcion:",4);
+            switch (opc3) {
+                case 1://insertar
+                if (validarEspacio(*colaCircular)){
+                    unCliente=CrearCliente();
+                    CapturarCliente(unCliente,num_articulos,arreglo);
+                    insertar(colaCircular,*unCliente);
+                }
+                listar(*colaCircular);
+                break;
+
+                case 2: //borrar
+                    if (!validarVacio(*colaCircular)){
+                    *unCliente= borrar(colaCircular);
+                    printf ("El dato borrado es: n");
+                    ListarCliente(*unCliente);
+                    listar(*colaCircular);
+                }
+                else
+                    printf("\nNo hay clientes en la fila...\n");
+            break;
+
+        case 3: //listar
+            listar(*colaCircular);
+            break;
+        }
+    } while (opcion != 4);
                 break;
         }
     } while (opcion !=4);
