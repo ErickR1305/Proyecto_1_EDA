@@ -27,4 +27,6 @@ void listarUnArticulo(int indice,Articulo *unArreglo);
 void borrarArticulo(int codigo,Articulo *unArreglo,int *indice);
 void actualizarArticulo(int codigo,Articulo *unArreglo,int indice);
 void LeerArticulos(Articulo *arreglo,int *indice);//Lee productos iniciasles con archivos
+void LiberarArreglo(Articulo *unArreglo, int max);
 #endif// INVENTARIO_H_INCLUDED
+
