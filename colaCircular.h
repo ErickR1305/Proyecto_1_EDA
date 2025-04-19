@@ -6,6 +6,7 @@ typedef struct {
     int h;
     int t;
     Cliente *arrCola; //arreglo cola
+    int clientes_atendidos;
 } ColaCircular;
 
 //OPERACIONES DEL TAD COLA
