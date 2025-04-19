@@ -3,34 +3,44 @@
 #include "inventario.h"
 #include <string.h>
 
-Articulo *crearArreglo(int max){
-    Articulo *nuevoArreglo;
-    nuevoArreglo=(Articulo *)malloc(max*sizeof(Articulo));
-    if(nuevoArreglo==NULL){
-        printf("\nNo se pudo asignar memoria...\n");
+Articulo *crearArreglo(int max) {
+    Articulo *nuevoArreglo = (Articulo *)malloc(max * sizeof(Articulo));
+    if (nuevoArreglo == NULL) {
+        printf("No se pudo asignar memoria para el arreglo de artículos.\n");
+        exit(1);
     }
-    for(int q=0;q<max;q++){
-    nuevoArreglo[q].proveedor=(Proveedor *)malloc(2*sizeof(Proveedor));
-        if(nuevoArreglo[q].proveedor==NULL){
-            printf("\nNo se pudo asignar memoria...\n");
-            }
-    for(int i=0;i<2;i++){
-        nuevoArreglo[q].proveedor[i].Nombre=(char *)malloc(30*sizeof(char));
-            if(nuevoArreglo[q].proveedor[i].Nombre==NULL){
-                printf("\nNo se pudo asignar memoria...\n");
-                }
-        nuevoArreglo[q].proveedor[i].Apellido=(char *)malloc(30*sizeof(char));
-            if(nuevoArreglo[q].proveedor[i].Apellido==NULL){
-                printf("\nNo se pudo asignar memoria...\n");
-                }
-    }
-    nuevoArreglo[q].info.nombre=(char *)malloc(30*sizeof(char));
-        if(nuevoArreglo[q].info.nombre==NULL){
-            printf("\nNo se pudo asignar memoria...\n");
+
+    for (int i = 0; i < max; i++) {
+        nuevoArreglo[i].info.nombre = (char *)malloc(30 * sizeof(char));
+        if (nuevoArreglo[i].info.nombre == NULL) {
+            printf("No se pudo asignar memoria para el nombre del artículo.\n");
+            exit(1);
         }
-    nuevoArreglo[q].info.Nom_departamento=(char *)calloc(30,sizeof(char));
-        if(nuevoArreglo[q].info.Nom_departamento==NULL){
-            printf("\nNo se pudo asignar memoria...\n");
+
+        nuevoArreglo[i].info.Nom_departamento = (char *)malloc(30 * sizeof(char));
+        if (nuevoArreglo[i].info.Nom_departamento == NULL) {
+            printf("No se pudo asignar memoria para el nombre del departamento.\n");
+            exit(1);
+        }
+
+        nuevoArreglo[i].proveedor = (Proveedor *)malloc(2 * sizeof(Proveedor));
+        if (nuevoArreglo[i].proveedor == NULL) {
+            printf("No se pudo asignar memoria para los proveedores.\n");
+            exit(1);
+        }
+
+        for (int j = 0; j < 2; j++) {
+            nuevoArreglo[i].proveedor[j].Nombre = (char *)malloc(30 * sizeof(char));
+            if (nuevoArreglo[i].proveedor[j].Nombre == NULL) {
+                printf("No se pudo asignar memoria para el nombre del proveedor.\n");
+                exit(1);
+            }
+
+            nuevoArreglo[i].proveedor[j].Apellido = (char *)malloc(30 * sizeof(char));
+            if (nuevoArreglo[i].proveedor[j].Apellido == NULL) {
+                printf("No se pudo asignar memoria para el apellido del proveedor.\n");
+                exit(1);
+            }
         }
     }
 
@@ -66,7 +76,7 @@ void insertarArticulo(int *indice,int max,Articulo *unArreglo){
     }
 }
 
-void listarArticulos(int *i,Articulo *unArreglo){
+void listarArticulos(int *i ,Articulo *unArreglo){ 
         printf("\n Nombre del articulo: %s",unArreglo[*i].info.nombre);
         printf("\n Codigo del articulo: %d",unArreglo[*i].info.codigo);
         printf("\n Precio del articulo: %.2f",unArreglo[*i].info.precio);
@@ -124,7 +134,7 @@ void borrarArticulo(int codigo,Articulo*unArreglo,int*indice){
             }
             (*indice)--;
             printf("\n Articulo eliminado exitosamente:");
-            listarArticulos(*indice,unArreglo);
+            listarArticulos(indice,unArreglo);
             return;
         }
         }
