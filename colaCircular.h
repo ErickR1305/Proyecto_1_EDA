@@ -2,7 +2,7 @@
 #define COLACIRCULAR_H_INCLUDED
 #include "Cliente.h"
 typedef struct {
-    int max; // tamaño de la cola
+    int max; // tamaÃ±o de la cola
     int h;
     int t;
     Cliente *arrCola; //arreglo cola
