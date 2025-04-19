@@ -27,7 +27,6 @@ Cliente *CrearCliente(){
 }
 
 void CapturarCliente(Cliente *unCliente,int num,Articulo *arreglo){
-    float cont=0;
     Articulo *unArticulo;
     char NombreCliente[10][30] = {"Maria", "Carlos", "Enrique", "Ricardo", "Erick", "Lucy", "Marcos", "Karol", "Daniel", "Diego"};
     strcpy(unCliente->Nombre_Cliente,NombreCliente[rand()%10]);
@@ -36,42 +35,77 @@ void CapturarCliente(Cliente *unCliente,int num,Articulo *arreglo){
     for(int i=0;i<unCliente->Productos;i++){
     if(!ValidarEspacio(*unCliente->pila)){
         unArticulo=CrearArticulo();
-        CapturarArticulo(unArticulo,arreglo,num,&cont);
+        CapturarArticulo(unArticulo,arreglo,num);
         push(*unArticulo,unCliente->pila);
+        free(unArticulo);
         }else{
             printf("El carrito esta vacio...");
 
         }
     }
-    unCliente->Total=cont;
-  /*  do{
-        unCliente->Pago=rand()%90+50;
-        if(unCliente->Pago<unCliente->Total){
-            printf("Te hace falta más dinero (%f)\n",unCliente->Total-unCliente->Pago);
-        }
-    }while(unCliente->Pago<unCliente->Total);
-    printf("\nRecibo %.2f, el total fue de %.2f, tu cambio es %.2f\n",unCliente->Pago,unCliente->Total,unCliente->Total-unCliente->Pago);
-                ListarCliente(*unCliente);*/
+
 }
 
 
 
 void ListarCliente(Cliente unCliente){
     printf("\nEl nombre del cliente es: %s",unCliente.Nombre_Cliente);
+    if(unCliente.pila->tope!=-1){
     printf("\n ------Carrito------\n");
+    }
     Listar(*unCliente.pila);
-    printf("\nEl total es:%.2f\n ",unCliente.Total);
+    printf("\n\n");
+    //printf("\nEl total es:%.2f\n ",unCliente.Total);
 }
 
-void LiberarCliente(Cliente *unCliente){
-    free(unCliente->Nombre_Cliente);
-    free(unCliente);
-    unCliente=NULL;
+void LiberarCliente(Cliente *unCliente) {
+    // Liberar artÃ­culos en la pila
+        Liberar(unCliente->pila);
+        free(unCliente->Nombre_Cliente);
 }
 
 void AtendiendoCliente(Cliente *unCliente){
+        int NumTarjeta[16];
+        Articulo aux;
+        int option;
         for(int i=unCliente->Productos-1;i>=0;i--){
-        printf("Cobrando producto:%s \n",unCliente->pila->ArrPila[i]);
+        unCliente->Total+=unCliente->pila->ArrPila[i].info.precio;
+        printf("Cobrando producto:%s---%.2f   %.2f\n",unCliente->pila->ArrPila[i].info.nombre,
+               unCliente->pila->ArrPila[i].info.precio,unCliente->Total);
+        aux=pop(unCliente->pila);
         sleep(1);
         }
+               printf("\nTu total es: %.2f \n",unCliente->Total);
+               printf("Desea pagar en efectivo o en tarjeta?\n");
+               option=rand()%2+1;
+               switch(option){
+                case 1://En efectivo
+                    printf("\n-----Pago en efectivo----\n");
+                    do{
+                        unCliente->Pago=rand()%90+50;
+                        if(unCliente->Pago<unCliente->Total){
+                            printf("\nRecibo %.2f ",unCliente->Pago);
+                            printf("\nTe hace falta %.2f\n ",unCliente->Total-unCliente->Pago);
+                        }else
+                            printf("\n Recibo %.2f, tu cambio es %.2f\n",unCliente->Pago,unCliente->Pago-unCliente->Total);
+                    }while(unCliente->Pago<unCliente->Total);
+
+               break;
+                case 2://Tarjeta
+                    printf("\n-----Pago con tarjeta-----\n");
+                    printf("Numero de tarjeta: ");
+                    for (int i = 0; i < 16; i++) {
+                        int digito = rand() % 10;
+                        printf("%d", digito);
+                        NumTarjeta[i]=digito;
+                        }
+                        printf("\nPagando...\n");
+                        sleep(2);
+                        printf("Has pagado %.2f  con ",unCliente->Total);
+                        for (int i = 0; i < 16; i++)
+                            printf("%d",NumTarjeta[i]);
+                            printf("\n");
+
 }
+
+        }
