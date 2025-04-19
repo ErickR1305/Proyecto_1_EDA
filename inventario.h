@@ -6,6 +6,9 @@ typedef struct{
     int inventario;
     char *nombre;
     char *Nom_departamento;
+    int cantidad_vendida;
+    char departamento;
+    char *nombre_departamento;
 }Info;
 
 typedef struct{
