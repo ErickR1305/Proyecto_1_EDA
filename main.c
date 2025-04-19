@@ -5,6 +5,9 @@
 #include "colaCircular.h"
 #include <time.h>
 #include "pila.h"
+#include <unistd.h>
+#include "estadisticas.h"
+#include "Cliente.h"
 
 int main(){
 int opcion,opc2,opc3,opc4;
@@ -128,7 +131,7 @@ LeerArticulos(arreglo,&num_articulos);
 
 
             case 3:
-
+            mostrarEstadisticas(colaCircular, arreglo, num_articulos);
             break;
         }
     } while (opcion !=4);
