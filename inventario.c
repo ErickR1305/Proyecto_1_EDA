@@ -117,7 +117,7 @@ void borrarArticulo(int codigo,Articulo*unArreglo,int*indice){
             unArreglo[i].info.inventario=unArreglo[*indice-1].info.inventario;
             strcpy(unArreglo[i].info.nombre,unArreglo[*indice-1].info.nombre);
             strcpy(unArreglo[i].info.Nom_departamento,unArreglo[*indice-1].info.Nom_departamento);
-            
+
             for(int p = 0; p < 2; p++) {
                 strcpy(unArreglo[i].proveedor[p].Nombre, unArreglo[*indice-1].proveedor[p].Nombre);
                 strcpy(unArreglo[i].proveedor[p].Apellido, unArreglo[*indice-1].proveedor[p].Apellido);
@@ -185,4 +185,17 @@ void LeerArticulos(Articulo *arreglo, int *num_articulos) {
     }
 
     fclose(dulce);
+}
+
+void LiberarArreglo(Articulo *unArreglo, int max) {
+    for(int q = 0; q < max; q++) {
+        free(unArreglo[q].info.nombre);
+        free(unArreglo[q].info.Nom_departamento);
+        for(int i = 0; i < 2; i++) {
+            free(unArreglo[q].proveedor[i].Nombre);
+            free(unArreglo[q].proveedor[i].Apellido);
+        }
+        free(unArreglo[q].proveedor);
+    }
+    free(unArreglo);
 }
