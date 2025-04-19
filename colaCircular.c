@@ -58,20 +58,19 @@ int validarVacio(ColaCircular colaC){
 
 
 Cliente borrar(ColaCircular *colaC){
-    Cliente aux = colaC->arrCola[colaC->h];
+    Cliente aux= colaC->arrCola[colaC->h];
     if (colaC->h == colaC->t)
         colaC->h = colaC->t = -1;
     else if (colaC->h == colaC->max-1)
         colaC->h = 0;
     else
         colaC->h++;
-
     return aux;
 }
 
-void liberaMamoria(ColaCircular *colaC){
+
+void liberarMemoria(ColaCircular *colaC){
     free(colaC->arrCola);
     free(colaC);
     colaC = NULL;
 }
-
