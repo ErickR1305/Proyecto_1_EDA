@@ -5,8 +5,8 @@
 #include "inventario.h"
 
 // Prototipos de funciones
-int departamentoMenorInventario(Articulo *arreglo, int num_articulos);
-int departamentoMayorVenta(Articulo *arreglo, int num_articulos);
+void departamentoMenorInventario(Articulo *arreglo, int num_articulos);
+void departamentoMayorVenta(Articulo *arreglo, int num_articulos);
 Articulo articuloMasCaro(Articulo *arreglo, int num_articulos);
 void totalVentasPorDepartamento(Articulo *arreglo, int num_articulos);
 Articulo productoMasVendido(Articulo *arreglo, int num_articulos);
@@ -18,3 +18,4 @@ Articulo productoMenorInventario(Articulo *arreglo, int num_articulos);
 void mostrarEstadisticas(ColaCircular *cola, Articulo *arreglo, int num_articulos);
 
 #endif
+
