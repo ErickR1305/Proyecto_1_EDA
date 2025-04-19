@@ -8,7 +8,7 @@ typedef struct{
     char *Nom_departamento;
     int cantidad_vendida;
     char departamento;
-    char *nombre_departamento;
+    int num_dept;
 }Info;
 
 typedef struct{
@@ -32,4 +32,3 @@ void actualizarArticulo(int codigo,Articulo *unArreglo,int indice);
 void LeerArticulos(Articulo *arreglo,int *indice);//Lee productos iniciasles con archivos
 void LiberarArreglo(Articulo *unArreglo, int max);
 #endif// INVENTARIO_H_INCLUDED
-
