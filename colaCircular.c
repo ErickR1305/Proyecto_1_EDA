@@ -1,15 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "colaCircular.h"
+#include "Cliente.h"
 
 ColaCircular *crearColaCircular(int max) {
-    ColaCircular *nuevaCola;
-    //crear la cola y el arreglo
-    nuevaCola = malloc(1 * sizeof(ColaCircular));
-    nuevaCola->arrCola = (Cliente *) calloc(max,sizeof(Cliente));
-    //INICIALIZAR
+    ColaCircular *nuevaCola = (ColaCircular *)malloc(sizeof(ColaCircular));
+    if (nuevaCola == NULL) {
+        printf("No se pudo asignar memoria para la cola circular.\n");
+        exit(1);
+    }
+    nuevaCola->arrCola = (Cliente *)malloc(max * sizeof(Cliente));
+    if (nuevaCola->arrCola == NULL) {
+        printf("No se pudo asignar memoria para el arreglo de la cola.\n");
+        free(nuevaCola);
+        exit(1);
+    }
     nuevaCola->max = max;
-    nuevaCola->h = nuevaCola->t= -1;
+    nuevaCola->h = nuevaCola->t = -1;
+    nuevaCola->clientes_atendidos = 0;
     return nuevaCola;
 }
 
@@ -65,6 +73,7 @@ Cliente borrar(ColaCircular *colaC){
         colaC->h = 0;
     else
         colaC->h++;
+        colaC->clientes_atendidos++;
     return aux;
 }
 
@@ -74,3 +83,4 @@ void liberarMemoria(ColaCircular *colaC){
     free(colaC);
     colaC = NULL;
 }
+
