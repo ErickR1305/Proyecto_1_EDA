@@ -10,7 +10,7 @@ int main(){
 int opcion,opc2,opc3,opc4;
 int num_articulos; //indice
 int max_articulos; //max-1, para que no se pase de lo asignado por malloc
-int codigo,i;
+int codigo,i,nuevo;
 srand(time(NULL));
 //prueba cola
 
@@ -100,45 +100,38 @@ LeerArticulos(arreglo,&num_articulos);
                     insertar(colaCircular,*unCliente);
                 }
             }
-                for(int i=0;i<=colaCircular->t;i++)
-                AtendiendoCliente(&colaCircular->arrCola[i]);
+            listar(*colaCircular);
 
-
+                do{
+                int q=colaCircular->h;
+                AtendiendoCliente(&colaCircular->arrCola[q]);
+                *unCliente=borrar(colaCircular);
+                printf("Cliente atentido:");
+                ListarCliente(*unCliente);
+                LiberarCliente(unCliente);
+                sleep(3);
+                nuevo=rand()%10+1;
+                if(nuevo>=7){
+                    if (validarEspacio(*colaCircular)){
+                        printf("\nSe formo otra persona mas en la fila...\n");
+                        sleep(2);
+                        unCliente=CrearCliente();
+                        CapturarCliente(unCliente,num_articulos,arreglo);
+                        insertar(colaCircular,*unCliente);
+                        }else
+                            printf("\nUna persona se quiso formar pero no habia espacio...\n");
+                }
                 listar(*colaCircular);
-            break;
+                }while(!validarVacio(*colaCircular));
+
+                break;
 
 
             case 3:
-                do {
-            printf("\n\nEstructura Cola circular\n====================");
-            opc3= desplegarMenu ("\n1)Insertar\n2)Borrar\n3)Listar\n4)Salir\nOpcion:",4);
-            switch (opc3) {
-                case 1://insertar
-                if (validarEspacio(*colaCircular)){
-                    unCliente=CrearCliente();
-                    CapturarCliente(unCliente,num_articulos,arreglo);
-                    insertar(colaCircular,*unCliente);
-                }
-                listar(*colaCircular);
-                break;
 
-                case 2: //borrar
-                    if (!validarVacio(*colaCircular)){
-                    *unCliente= borrar(colaCircular);
-                    printf ("El dato borrado es: n");
-                    ListarCliente(*unCliente);
-                    listar(*colaCircular);
-                }
-                else
-                    printf("\nNo hay clientes en la fila...\n");
             break;
-
-        case 3: //listar
-            listar(*colaCircular);
-            break;
-        }
-    } while (opcion != 4);
-                break;
         }
     } while (opcion !=4);
+    liberarMemoria(colaCircular);
+    LiberarArreglo(arreglo,max_articulos);
 }
