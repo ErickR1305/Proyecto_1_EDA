@@ -11,13 +11,13 @@ Articulo *CrearArticulo(){
     }
     nuevoArticulo->info.nombre=(char *)malloc(30*sizeof(char));
         if(nuevoArticulo->info.nombre==NULL){
-            printf("No se logró asignar memoria correctamente...");
+            printf("No se logrÃ³ asignar memoria correctamente...");
             exit(1);
         }
     return nuevoArticulo;
 
 }
-void CapturarArticulo(Articulo *unArticulo,Articulo *Arreglo,int num,float *cont){
+void CapturarArticulo(Articulo *unArticulo,Articulo *Arreglo,int num){
     int indice;
     do{
     indice=rand()%num;
@@ -25,7 +25,6 @@ void CapturarArticulo(Articulo *unArticulo,Articulo *Arreglo,int num,float *cont
     unArticulo->info.precio=Arreglo[indice].info.precio;
     }while(Arreglo[indice].info.inventario==0);
     Arreglo[indice].info.inventario--;
-    (*cont)+=Arreglo[indice].info.precio;
 }
 
 
