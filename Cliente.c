@@ -4,6 +4,8 @@
 #include "inventario.h"
 #include "Carrito.h"
 #include "colaCircular.h"
+#include <string.h>
+#include <unistd.h>
 
 Cliente *CrearCliente(){
     Cliente *nuevoCliente;
