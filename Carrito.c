@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "Carrito.h"
 #include "inventario.h"
 
@@ -25,6 +26,7 @@ void CapturarArticulo(Articulo *unArticulo,Articulo *Arreglo,int num){
     unArticulo->info.precio=Arreglo[indice].info.precio;
     }while(Arreglo[indice].info.inventario==0);
     Arreglo[indice].info.inventario--;
+    Arreglo[indice].info.cantidad_vendida++; // Incrementar ventas
 }
 
 
