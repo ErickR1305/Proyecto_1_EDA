@@ -63,6 +63,8 @@ void insertarArticulo(int *indice,int max,Articulo *unArreglo){
         printf("\n Ingrese el departamento:");
         scanf("%s",unArreglo[*indice].info.Nom_departamento);
         getchar();
+        printf("Ingresa el numero de departamento:");
+        scanf("%d",&unArreglo[*indice].info.num_dept);
         for(int i=0;i<2;i++){
         printf("\n Ingrese el proveedor:\n Nombre[%d]:",i+1);
         scanf("%s",unArreglo[*indice].proveedor[i].Nombre);
