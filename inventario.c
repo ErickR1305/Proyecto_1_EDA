@@ -76,12 +76,13 @@ void insertarArticulo(int *indice,int max,Articulo *unArreglo){
     }
 }
 
-void listarArticulos(int *i ,Articulo *unArreglo){ 
+void listarArticulos(int *i ,Articulo *unArreglo){
         printf("\n Nombre del articulo: %s",unArreglo[*i].info.nombre);
         printf("\n Codigo del articulo: %d",unArreglo[*i].info.codigo);
         printf("\n Precio del articulo: %.2f",unArreglo[*i].info.precio);
         printf("\n Inventario del articulo: %d",unArreglo[*i].info.inventario);
-        printf("\n Departamento del articulo: %s",unArreglo[*i].info.Nom_departamento);
+        printf("\n Departamento del articulo: %s num:%d",unArreglo[*i].info.Nom_departamento,
+               unArreglo[*i].info.num_dept);
         for (int p=0;p<2;p++){
             printf("\n Proveedor [%d]:%s %s",p+1,unArreglo[*i].proveedor[p].Nombre,
                                             unArreglo[*i].proveedor[p].Apellido);
@@ -97,7 +98,8 @@ void listarUnArticulo(int indice,Articulo *unArreglo){
     printf("\n Codigo del articulo: %d",unArreglo[indice].info.codigo);
     printf("\n Precio del articulo: %.2f",unArreglo[indice].info.precio);
     printf("\n Inventario del articulo: %d",unArreglo[indice].info.inventario);
-    printf("\n Departamento del articulo: %s",unArreglo[indice].info.Nom_departamento);
+    printf("\n Departamento del articulo: %s  num:%d",unArreglo[indice].info.Nom_departamento,
+           unArreglo[indice].info.num_dept);
     for (int p=0;p<2;p++){
         printf("\n Proveedor [%d]:%s %s",p+1,unArreglo[indice].proveedor[p].Nombre,
                                          unArreglo[indice].proveedor[p].Apellido);
@@ -116,7 +118,7 @@ void buscarArticulos(int codigo,Articulo*unArreglo,int indice){
         }
         printf("\n El articulo con el codigo %d NO existe",codigo);
 }
-
+/*
 void borrarArticulo(int codigo,Articulo*unArreglo,int*indice){
     for(int i=0;i<*indice;i++){
         if(unArreglo[i].info.codigo==codigo){
@@ -139,6 +141,34 @@ void borrarArticulo(int codigo,Articulo*unArreglo,int*indice){
         }
         }
         printf("\n El articulo con el codigo %d NO existe",codigo);
+}*/
+void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
+    int j=0;
+    if (*indice <= 0) {  // Verificar si hay elementos
+        printf("\nNo hay artículos para eliminar.");
+        return;
+    }
+
+    for (int i = 0; i < *indice; i++) {
+        if (unArreglo[i].info.codigo == codigo) {
+            printf("\nSe eliminará el siguiente artículo:");
+            listarUnArticulo(i, unArreglo);
+
+            // Reemplazar el artículo a borrar con el último (si no es el mismo)
+            if (i != (*indice - 1)) {
+                unArreglo[i] = unArreglo[*indice - 1];  // Copia directa de la estructura
+            }
+
+            (*indice)--;  // Reducir el contador
+
+            printf("\nArticulo eliminado. Articulos restantes:");
+            while(j<(*indice)){
+                listarArticulos(&j,unArreglo);
+            }
+            return;
+        }
+    }
+    printf("\nArtículo con código %d no encontrado.", codigo);
 }
 
 void actualizarArticulo(int codigo,Articulo*unArreglo,int indice){
@@ -181,16 +211,17 @@ void LeerArticulos(Articulo *arreglo, int *num_articulos) {
     }
 
     while (*num_articulos < 30 &&
-           fscanf(dulce, "%29s %d %f %d %29s %29s %29s %29s %29s",
+           fscanf(dulce, "%29s %d %f %d %29s %d %29s %29s %29s %29s",
                   arreglo[*num_articulos].info.nombre,
                   &arreglo[*num_articulos].info.codigo,
                   &arreglo[*num_articulos].info.precio,
                   &arreglo[*num_articulos].info.inventario,
                   arreglo[*num_articulos].info.Nom_departamento,
+                  &arreglo[*num_articulos].info.num_dept,
                   arreglo[*num_articulos].proveedor[0].Nombre,
                   arreglo[*num_articulos].proveedor[0].Apellido,
                   arreglo[*num_articulos].proveedor[1].Nombre,
-                  arreglo[*num_articulos].proveedor[1].Apellido)== 9) {
+                  arreglo[*num_articulos].proveedor[1].Apellido)== 10) {
         (*num_articulos)++;
     }
 
