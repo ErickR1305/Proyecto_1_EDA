@@ -73,6 +73,7 @@ void AtendiendoCliente(Cliente *unCliente){
         int NumTarjeta[16];
         Articulo aux;
         int option;
+        unCliente->Total=0.0;
         for(int i=unCliente->Productos-1;i>=0;i--){
         unCliente->Total+=unCliente->pila->ArrPila[i].info.precio;
         printf("Cobrando producto:%s---%.2f   %.2f\n",unCliente->pila->ArrPila[i].info.nombre,
