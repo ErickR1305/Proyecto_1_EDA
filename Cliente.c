@@ -55,9 +55,12 @@ void ListarCliente(Cliente unCliente){
     if(unCliente.pila->tope!=-1){
     printf("\n ------Carrito------\n");
     }
-    Listar(*unCliente.pila);
+    int j=unCliente.pila->tope;
+    while (j >= 0) {
+    Listar(*unCliente.pila, &j);
+    }
     printf("\n\n");
-    //printf("\nEl total es:%.2f\n ",unCliente.Total);
+
 }
 
 void LiberarCliente(Cliente *unCliente) {
