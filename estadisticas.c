@@ -73,20 +73,20 @@ Articulo articuloMasCaro(Articulo *arreglo, int num_articulos) {
     return masCaro;
 }
 
-// 4. Total de ventas por departamento
+// 5. Total de ventas por departamento
 void totalVentasPorDepartamento(Articulo *arreglo, int num_articulos) {
-    float ventas[10] = {0}; // Suponiendo 10 departamentos
+    float ventas[3] = {0};
     for (int i = 0; i < num_articulos; i++) {
-        ventas[arreglo[i].info.departamento] += arreglo[i].info.cantidad_vendida * arreglo[i].info.precio;
+        ventas[arreglo[i].info.num_dept-1]+= (arreglo[i].info.cantidad_vendida * arreglo[i].info.precio);
     }
     printf("\n 6. Cuales son las ventas por cada departamento?");
     printf("\nTotal de ventas por departamento:\n");
-    for (int i = 0; i < 10; i++) {
-        printf("Departamento %d: %.2f\n", i, ventas[i]);
+    for (int i = 0; i < 3; i++) {
+        printf("Departamento %d: %.2f\n", i+1, ventas[i]);
     }
 }
 
-// 5. Producto más vendido (por cantidad)
+// 4. Producto más vendido (por cantidad)
 Articulo productoMasVendido(Articulo *arreglo, int num_articulos) {
     Articulo masVendido = arreglo[0];
     for (int i = 1; i < num_articulos; i++) {
@@ -99,22 +99,26 @@ Articulo productoMasVendido(Articulo *arreglo, int num_articulos) {
 
 // 6. Porcentaje de inventario vendido en cada departamento
 void porcentajeInventarioVendido(Articulo *arreglo, int num_articulos) {
-    int inventarioTotal[10] = {0};
-    int vendidoTotal[10] = {0};
+    int inventarioTotal[3] ={0};
+    int vendidos[3]={0};
     for (int i = 0; i < num_articulos; i++) {
-        int dept = arreglo[i].info.departamento;
-        inventarioTotal[dept] += arreglo[i].info.inventario + arreglo[i].info.cantidad_vendida;
-        vendidoTotal[dept] += arreglo[i].info.cantidad_vendida;
+       for(int j=1;j<4;j++){
+            if(arreglo[i].info.num_dept==j){
+            inventarioTotal[j-1]+=(arreglo[i].info.inventario+arreglo[i].info.cantidad_vendida);
+            vendidos[j-1]+=(arreglo[i].info.cantidad_vendida);
+            }
+       }
     }
     printf("\n7. Porcentaje de venta de cada departamento de articulos?");
     printf("\nPorcentaje de inventario vendido por departamento:\n");
-    for (int i = 0; i < 10; i++) {
+    for (int i = 0; i < 3; i++) {
         if (inventarioTotal[i] > 0) {
-            float porcentaje = (vendidoTotal[i] / (float)inventarioTotal[i]) * 100;
-            printf("Departamento %d: %.2f%%\n", i, porcentaje);
+            float porcentaje = ((float)vendidos[i] /(float)inventarioTotal[i]) * 100;
+            printf("Departamento %d: %.2f%%\n", i+1, porcentaje);
         }
     }
 }
+
 
 // 7. Promedio de precio de todos los productos
 float promedioPrecio(Articulo *arreglo, int num_articulos) {
