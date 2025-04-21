@@ -111,8 +111,9 @@ void listarUnArticulo(int indice,Articulo *unArreglo){
 
 
 void buscarArticulos(int codigo,Articulo*unArreglo,int indice){
-    for(int i=0;i<indice;i++){
-        if(unArreglo[i].info.codigo==codigo){
+    Articulo*aux=unArreglo;
+    for(int i=0;i<indice;i++,aux++){
+        if(aux->info.codigo==codigo){
             printf("\n El articulo con el codigo %d SI existe, y esta es su info. :",codigo);
             listarUnArticulo(i,unArreglo);
             return;
