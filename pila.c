@@ -35,14 +35,13 @@ Articulo pop(Pila *pila){
     return aux;
 }
 
-void Listar(Pila pila){
-    for(int i=pila.tope;i>=0;i--){
-        ListarArticulo(pila.ArrPila[i]);
+void Listar(Pila pila,int *j){
+        ListarArticulo(pila.ArrPila[*j]);
+        (*j)--;
     }
-}
 
 void Liberar(Pila *pila){
-    printf("Liberando memoria...");
+    printf("Liberando carrito...\n\n");
     free(pila->ArrPila);
     free(pila);
     pila=NULL;
