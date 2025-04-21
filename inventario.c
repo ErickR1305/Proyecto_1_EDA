@@ -118,30 +118,7 @@ void buscarArticulos(int codigo,Articulo*unArreglo,int indice){
         }
         printf("\n El articulo con el codigo %d NO existe",codigo);
 }
-/*
-void borrarArticulo(int codigo,Articulo*unArreglo,int*indice){
-    for(int i=0;i<*indice;i++){
-        if(unArreglo[i].info.codigo==codigo){
-            printf("\n Se eliminara el siguiente articulo con la siguiente info.");
-            listarUnArticulo(i,unArreglo);
-            unArreglo[i].info.codigo=unArreglo[*indice-1].info.codigo;
-            unArreglo[i].info.precio=unArreglo[*indice-1].info.precio;
-            unArreglo[i].info.inventario=unArreglo[*indice-1].info.inventario;
-            strcpy(unArreglo[i].info.nombre,unArreglo[*indice-1].info.nombre);
-            strcpy(unArreglo[i].info.Nom_departamento,unArreglo[*indice-1].info.Nom_departamento);
 
-            for(int p = 0; p < 2; p++) {
-                strcpy(unArreglo[i].proveedor[p].Nombre, unArreglo[*indice-1].proveedor[p].Nombre);
-                strcpy(unArreglo[i].proveedor[p].Apellido, unArreglo[*indice-1].proveedor[p].Apellido);
-            }
-            (*indice)--;
-            printf("\n Articulo eliminado exitosamente:");
-            listarArticulos(indice,unArreglo);
-            return;
-        }
-        }
-        printf("\n El articulo con el codigo %d NO existe",codigo);
-}*/
 void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
     int j=0;
     if (*indice <= 0) {  // Verificar si hay elementos
@@ -154,9 +131,9 @@ void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
             printf("\nSe eliminará el siguiente artículo:");
             listarUnArticulo(i, unArreglo);
 
-            // Reemplazar el artículo a borrar con el último (si no es el mismo)
+
             if (i != (*indice - 1)) {
-                unArreglo[i] = unArreglo[*indice - 1];  // Copia directa de la estructura
+                unArreglo[i] = unArreglo[*indice - 1];  
             }
 
             (*indice)--;  // Reducir el contador
