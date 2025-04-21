@@ -131,9 +131,18 @@ void borrarArticulo(int codigo, Articulo* unArreglo, int* indice) {
             printf("\nSe eliminará el siguiente artículo:");
             listarUnArticulo(i, unArreglo);
 
-
+            // Reemplazar el artículo a borrar con el último (si no es el mismo)
             if (i != (*indice - 1)) {
-                unArreglo[i] = unArreglo[*indice - 1];  
+            unArreglo[i].info.codigo=unArreglo[*indice-1].info.codigo;
+            unArreglo[i].info.precio=unArreglo[*indice-1].info.precio;
+            unArreglo[i].info.inventario=unArreglo[*indice-1].info.inventario;
+            strcpy(unArreglo[i].info.nombre,unArreglo[*indice-1].info.nombre);
+            strcpy(unArreglo[i].info.Nom_departamento,unArreglo[*indice-1].info.Nom_departamento);
+
+            for(int p = 0; p < 2; p++) {
+                strcpy(unArreglo[i].proveedor[p].Nombre, unArreglo[*indice-1].proveedor[p].Nombre);
+                strcpy(unArreglo[i].proveedor[p].Apellido, unArreglo[*indice-1].proveedor[p].Apellido);
+            }  // Copia directa de la estructura
             }
 
             (*indice)--;  // Reducir el contador
