@@ -43,18 +43,22 @@ void insertar(ColaCircular *colaC, Cliente dato) {
 }
 
 void listar(ColaCircular colaC){
-   int i;
+   int i=colaC.h;
    printf("\n\tCOLA:");
    if (!validarVacio(colaC)){
         if (colaC.h<= colaC.t){
-           for (i=colaC.h; i<=colaC.t ; i++)
-                ListarCliente(colaC.arrCola[i]);
+            while(i<=colaC.t){
+                ListarCliente(colaC.arrCola[i],&i);
+            }
         }
         else {
-            for (i=colaC.h; i<colaC.max; i++)
-                ListarCliente(colaC.arrCola[i]);
-            for (i=0; i<=colaC.t; i++)
-                ListarCliente(colaC.arrCola[i]);
+            while(i<colaC.max){
+                ListarCliente(colaC.arrCola[i],&i);
+            }
+            i=0;
+            while(i<=colaC.t){
+                ListarCliente(colaC.arrCola[i],&i);
+        }
         }
    }
    else
@@ -83,4 +87,3 @@ void liberarMemoria(ColaCircular *colaC){
     free(colaC);
     colaC = NULL;
 }
-
